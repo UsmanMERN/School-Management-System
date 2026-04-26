@@ -176,7 +176,7 @@ const Profile = () => {
           <input
             name={role === "STUDENT" ? "parentNo" : "phoneNo"}
             value={user?.phoneNo || user?.parentNo}
-            onChange={role !== "STUDENT" ? handleChange : () => consol.log("Nice Try")}
+            onChange={role !== "STUDENT" ? handleChange : () => console.log("Nice Try")}
             className="input p-2 border-b-2 border-primary outline-none rounded-md w-full bg-transparent"
             disabled={role === "STUDENT"}
           />
