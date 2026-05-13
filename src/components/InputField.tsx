@@ -1,4 +1,3 @@
-import { FieldError } from "react-hook-form";
 
 type InputFieldProps = {
   label: string;
@@ -6,7 +5,7 @@ type InputFieldProps = {
   register: any;
   name: string;
   defaultValue?: string;
-  error?: FieldError;
+  error?: any;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   className?: string;
 };
