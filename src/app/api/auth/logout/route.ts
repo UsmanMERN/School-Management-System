@@ -13,14 +13,16 @@ export const GET = async () => {
     cookiesStore.delete("accesstoken");
     cookiesStore.delete("refreshtoken");
 
-    await prisma.refreshTokens.delete({
-      where: {
-        tokenHash: crypto
-          .createHash("sha256")
-          .update(refreshtoken)
-          .digest("hex"),
-      },
-    });
+    if (refreshtoken) {
+      await prisma.refreshTokens.deleteMany({
+        where: {
+          tokenHash: crypto
+            .createHash("sha256")
+            .update(refreshtoken)
+            .digest("hex"),
+        },
+      });
+    }
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

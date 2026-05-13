@@ -56,20 +56,24 @@ export const GET = withAuthRoute(async (req: Request, user) => {
 
     // Fetch students in this class
 
+    const isValidGender = ["MALE", "FEMALE"].includes(search.toUpperCase());
+
     const students = await prisma.student.findMany({
       where: {
-  schoolId: user.schoolId,
-  class: teacherClass.name,
-  ...(search && {
-    OR: [
-      { name: { contains: search, mode: "insensitive" } },
-      { email: { contains: search, mode: "insensitive" } },
-      { address: { contains: search, mode: "insensitive" } },
-      { parentName: { contains: search, mode: "insensitive" } },
-      { gender: { equals: search.toUpperCase() as Gender } },
-    ],
-  }),
-},
+        schoolId: user.schoolId,
+        class: teacherClass.name,
+        ...(search && {
+          OR: [
+            { name: { contains: search, mode: "insensitive" } },
+            { email: { contains: search, mode: "insensitive" } },
+            { address: { contains: search, mode: "insensitive" } },
+            { parentName: { contains: search, mode: "insensitive" } },
+            ...(isValidGender
+              ? [{ gender: { equals: search.toUpperCase() as Gender } }]
+              : []),
+          ],
+        }),
+      },
       skip,
       take: limit,
       orderBy: { name: "asc" },
@@ -80,21 +84,22 @@ export const GET = withAuthRoute(async (req: Request, user) => {
       },
     });
 
-    const total = await prisma.student.count({ 
+    const total = await prisma.student.count({
       where: {
-  schoolId: user.schoolId,
-  class: teacherClass.name,
-  ...(search && {
-    OR: [
-      { name: { contains: search, mode: "insensitive" } },
-      { email: { contains: search, mode: "insensitive" } },
-      { address: { contains: search, mode: "insensitive" } },
-      { parentName: { contains: search, mode: "insensitive" } },
-      { gender: { equals: search.toUpperCase() as Gender } },
-    ],
-  }),
-}
-      
+        schoolId: user.schoolId,
+        class: teacherClass.name,
+        ...(search && {
+          OR: [
+            { name: { contains: search, mode: "insensitive" } },
+            { email: { contains: search, mode: "insensitive" } },
+            { address: { contains: search, mode: "insensitive" } },
+            { parentName: { contains: search, mode: "insensitive" } },
+            ...(isValidGender
+              ? [{ gender: { equals: search.toUpperCase() as Gender } }]
+              : []),
+          ],
+        }),
+      },
     });
 
     // If attendance already marked for all students, return attendance status

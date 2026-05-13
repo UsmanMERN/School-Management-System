@@ -1,6 +1,6 @@
-# 🚀 School Control: Revolutionize Your School Management 🏫
+# 🚀 EduStream: Modern School Management System 🏫
 
-A comprehensive school management application built with **Next.js**, **Prisma**, and **Tailwind CSS**, designed to connect admins, teachers, parents, and students. 
+A comprehensive school management application built with **Next.js**, **Prisma**, and **Tailwind CSS**, designed to connect admins, teachers, parents, and students. This project was developed as a Final Year Project (FYP).
 
 ## ✨ Features
 
@@ -10,7 +10,6 @@ A comprehensive school management application built with **Next.js**, **Prisma**
 - 👪 **Parent Portal**: Parents can conveniently view the schedules of all their children.
 - 📢 **School-Wide Communication**: Share important announcements and events school-wide to keep everyone in the loop.
 - 📱 **PWA Support**: Install the app on any device for quick and easy access.
-   
 
 ## 💻 Technologies Used
 
@@ -20,49 +19,39 @@ A comprehensive school management application built with **Next.js**, **Prisma**
 | TypeScript     | Superset of JavaScript for enhanced type safety                        |
 | Tailwind CSS   | Utility-first CSS framework for rapid UI development                   |
 | Prisma         | Modern database toolkit & ORM                                          |
-| JSON Web Tokens| For Authentication                                                       |
-| Nodemailer         | For email Services like sending confirmation mails                       |
-| Framer Motion  | Used for Animations and transistions                                      |
-| React Hook Form| Used for forms and handling them easily                     |
-| Zod         | For schema validation                                  |
-| Zustland  | For state management                                    |
+| JSON Web Tokens| For Secure Authentication                                                |
+| Nodemailer     | For automated email services                                             |
+| Framer Motion  | Used for smooth animations and transitions                               |
+| React Hook Form| Used for efficient form handling                                         |
+| Zod            | For robust schema validation                                             |
+| Zustand        | For lightweight state management                                         |
 
 ## 🛠️ Installation
 
 Follow these steps to set up the project locally:
 
-1.  **Clone the repository**:
+1.  **Install dependencies**:
     ```bash
-    git clone https://github.com/U22099/School-Management-System.git
+    npm install --legacy-peer-deps
     ```
 
-2.  **Navigate to the project directory**:
-    ```bash
-    cd School-Management-System
-    ```
-
-3.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-
-4.  **Set up your .env file**:
+2.  **Set up your .env file**:
     -   Create a `.env` file in the root directory.
     -   Add the following environment variables:
     ```
     DATABASE_URL=your_database_url
     JWT_SECRET=your_jwt_secret
-    NEXT_PUBLIC_BASE_URL=http://localhost:3000 # or your production URL
+    NEXT_PUBLIC_BASE_URL=http://localhost:3000
     EMAIL=your_email
     EMAIL_PASSWORD=your_email_password
     ```
 
-5.  **Run Prisma migrations**:
+3.  **Sync Database**:
     ```bash
-    npx prisma migrate dev
+    npx prisma db push
     ```
 
-6.  **Start the development server**:
+4.  **Start the development server**:
     ```bash
     npm run dev
     ```
@@ -73,10 +62,10 @@ Follow these steps to set up the project locally:
     -   Open your browser and navigate to `http://localhost:3000`.
 
 2.  **Register a new school**:
-    -   Click on "Create new school" to register your school.
+    -   Click on "Get Started" and navigate to create a new school.
     
 3.  **Login**:
-    -   Log in with the credentials you provided during registration.
+    -   Log in with the credentials provided during school registration.
     
 4.  **Explore the dashboard**:
     -   Admins can manage school data.
@@ -84,26 +73,6 @@ Follow these steps to set up the project locally:
     -   Parents can view their children's schedules.
     -   Students can view their schedules and announcements.
 
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these guidelines:
-
--   🌟 Fork the repository.
--   🌿 Create a new branch for your feature or bug fix.
--   ✅ Commit your changes with clear, concise messages.
--   🚀 Push your branch to GitHub.
--   🎁 Submit a pull request.
-
-## 🙌 Credits/Acknowledgments
-
-This project utilizes a starter UI pack from a YouTube tutorial by [Lama Dev](https://youtu.be/myYIGLFxZas). The initial UI structure was based on the starter repository available here: [Next.js Dashboard UI Starter](https://github.com/safak/next-dashboard-ui/tree/starter). We extend our sincere gratitude for providing a solid foundation to build upon.
-
 ## 📄 License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-## 🧑‍Author
-
-- **Daniel(U22099)** - [X](https://x.com/dan_22099) - [GitHub](https://github.com/U22099)
-
-[![Readme was generated by Dokugen](https://img.shields.io/badge/Readme%20was%20generated%20by-Dokugen-brightgreen)](https://www.npmjs.com/package/dokugen)
+This project is licensed under the Apache License 2.0.

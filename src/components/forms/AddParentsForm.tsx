@@ -181,7 +181,7 @@ const AddParentsForm = ({
         </div>
         <button
           disabled={parentsData.length < 1}
-          onClick={!(parentsData.length < 1) ? () => setPage((prev) => prev + 1) : console.log("Nice Try")}
+          onClick={!(parentsData.length < 1) ? () => setPage((prev) => prev + 1) : () => console.log("Nice Try")}
           className="button justify-end"
         >
           Next <ArrowRight className="stroke-black" />

@@ -207,7 +207,7 @@ const AddStudentsForm = ({
         </div>
         <button
           disabled={studentsData.length < 1}
-          onClick={!(studentsData.length < 1) ? () => setPage((prev) => prev + 1) : console.log("Nice Try")}
+          onClick={!(studentsData.length < 1) ? () => setPage((prev) => prev + 1) : () => console.log("Nice Try")}
           className="button justify-end"
         >
           Next <ArrowRight className="stroke-black" />

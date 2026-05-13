@@ -14,6 +14,8 @@ export const GET = withAuthRoute(async (req: Request, user) => {
     const order = (searchParams.get("sort") as "asc" | "desc") || "asc";
     const skip = (page - 1) * limit;
 
+    const isValidGender = ["MALE", "FEMALE"].includes(search.toUpperCase());
+
     const students = await prisma.student.findMany({
       where: {
         schoolId: user.schoolId,
@@ -25,7 +27,9 @@ export const GET = withAuthRoute(async (req: Request, user) => {
             { class: { contains: search, mode: "insensitive" } },
             { parentName: { contains: search, mode: "insensitive" } },
             { birthdate: { contains: search, mode: "insensitive" } },
-            { gender: { equals: search.toUpperCase() as Gender } },
+            ...(isValidGender
+              ? [{ gender: { equals: search.toUpperCase() as Gender } }]
+              : []),
             { DOA: { contains: search, mode: "insensitive" } },
             { parentNo: { contains: search, mode: "insensitive" } },
             { admissionNo: { contains: search, mode: "insensitive" } },
@@ -48,7 +52,9 @@ export const GET = withAuthRoute(async (req: Request, user) => {
             { class: { contains: search, mode: "insensitive" } },
             { parentName: { contains: search, mode: "insensitive" } },
             { birthdate: { contains: search, mode: "insensitive" } },
-            { gender: { equals: search.toUpperCase() as Gender } },
+            ...(isValidGender
+              ? [{ gender: { equals: search.toUpperCase() as Gender } }]
+              : []),
             { DOA: { contains: search, mode: "insensitive" } },
             { parentNo: { contains: search, mode: "insensitive" } },
             { admissionNo: { contains: search, mode: "insensitive" } },

@@ -32,8 +32,26 @@ const schema = z.object({
     .min(1, { message: "Year of Service must be at least 1!" }),
   teaching: z.boolean(),
   admin: z.boolean(),
-  classesTeaching: z.string().array(),
-  subjectsTaught: z.string().array(),
+  classesTeaching: z.preprocess(
+    (val) =>
+      typeof val === "string"
+        ? val
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s !== "")
+        : val,
+    z.string().array()
+  ),
+  subjectsTaught: z.preprocess(
+    (val) =>
+      typeof val === "string"
+        ? val
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s !== "")
+        : val,
+    z.string().array()
+  ),
   address: z.string().min(1, { message: "Address is required!" }),
   phoneNo: z.string().min(1, { message: "Phone Number is required!" }),
   yearOfExit: z
@@ -187,18 +205,18 @@ const StaffForm = ({
         <InputField
           label="Classes Teaching"
           name="classesTeaching"
-          defaultValue={data?.classesTeaching.join(",")}
+          defaultValue={data?.classesTeaching?.join(",")}
           register={register}
-          error={errors.classesTeaching ? errors.classesTeaching[0] : undefined}
+          error={errors.classesTeaching}
           className="w-full md:w-1/4"
           type="array"
         />
         <InputField
           label="Subjects Teaching"
           name="subjectsTaught"
-          defaultValue={data?.subjectsTaught.join(",")}
+          defaultValue={data?.subjectsTaught?.join(",")}
           register={register}
-          error={errors.subjectsTaught ? errors.subjectsTaught[0] : undefined}
+          error={errors.subjectsTaught}
           className="w-full md:w-1/4"
           type="array"
         />

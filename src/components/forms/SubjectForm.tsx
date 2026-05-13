@@ -11,7 +11,16 @@ import { LoaderCircle } from "lucide-react";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Subject name is required!" }),
-  teachers: z.array(z.string()).optional(),
+  teachers: z.preprocess(
+    (val) =>
+      typeof val === "string"
+        ? val
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s !== "")
+        : val,
+    z.string().array()
+  ),
 });
 
 type Inputs = z.infer<typeof schema>;
@@ -36,7 +45,7 @@ const SubjectForm = ({
   const onSubmit = handleSubmit(async (formData) => {
     try {
       setLoading(true);
-      const res = await apiClient.post(`/announcements/create`, {
+      const res = await apiClient.post(`/subjects`, {
         data: formData,
         type,
         id: data?.id,
