@@ -38,11 +38,11 @@ const SubjectForm = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm({
     resolver: zodResolver(schema),
   });
   const [loading, setLoading] = useState(false);
-  const onSubmit = handleSubmit(async (formData) => {
+  const onSubmit = handleSubmit(async (formData: Inputs) => {
     try {
       setLoading(true);
       const res = await apiClient.post(`/subjects`, {
