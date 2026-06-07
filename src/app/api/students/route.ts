@@ -93,8 +93,53 @@ export const POST = withAuthRoute(async (req: Request, user) => {
       return NextResponse.json({ error: "Data are required" }, { status: 400 });
     }
 
-    let parentId = v4();
+    // Check if the student's email is already registered in User table
+    if (type === "create") {
+      const existingStudentUser = await prisma.user.findUnique({
+        where: { email: data.email },
+      });
+      if (existingStudentUser) {
+        return NextResponse.json(
+          { error: "This student email is already registered." },
+          { status: 400 }
+        );
+      }
+    } else if (type === "update") {
+      const studentUserEmailOwner = await prisma.user.findUnique({
+        where: { email: data.email },
+      });
+      if (studentUserEmailOwner && studentUserEmailOwner.id !== id) {
+        return NextResponse.json(
+          { error: "This email is already in use by another user." },
+          { status: 400 }
+        );
+      }
+    }
 
+    // Check if the parent's email is already registered in the Parent table
+    const existingParent =
+      type === "create"
+        ? await prisma.parent.findUnique({
+            where: {
+              email: parentEmail,
+            },
+          })
+        : null;
+
+    // Validate that the parent's email is not taken by another user role if creating a new parent
+    if (type === "create" && !existingParent) {
+      const existingParentUser = await prisma.user.findUnique({
+        where: { email: parentEmail },
+      });
+      if (existingParentUser) {
+        return NextResponse.json(
+          { error: "The parent email is already registered with another account role." },
+          { status: 400 }
+        );
+      }
+    }
+
+    let parentId = v4();
     const newId = v4();
 
     type === "create" ? await prisma.user.create({
@@ -115,20 +160,23 @@ export const POST = withAuthRoute(async (req: Request, user) => {
       },
     });
 
-    const existingParent =
-      type === "create"
-        ? await prisma.parent.findUnique({
-            where: {
-              email: parentEmail,
-            },
-          })
-        : null;
-
     if (existingParent) {
       parentId = existingParent.id;
     } else {
-      type === "create" &&
-        (await prisma.parent.create({
+      if (type === "create") {
+        // Create user record for parent first
+        await prisma.user.create({
+          data: {
+            id: parentId,
+            name: data.parentName,
+            email: parentEmail,
+            schoolId: user.schoolId,
+            role: "PARENT",
+          },
+        });
+
+        // Create parent record
+        await prisma.parent.create({
           data: {
             id: parentId,
             name: data.parentName,
@@ -137,7 +185,8 @@ export const POST = withAuthRoute(async (req: Request, user) => {
             phoneNo: data.parentNo,
             schoolId: user.schoolId,
           },
-        }));
+        });
+      }
     }
 
     type === "create"

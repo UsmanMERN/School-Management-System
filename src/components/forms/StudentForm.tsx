@@ -58,9 +58,10 @@ const StudentForm = ({
         toast.success(res.data.message);
         close();
       } else toast.error(res.data.message);
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
-      toast.error("Operation unsuccessfull");
+      const errorMessage = err.response?.data?.error || err.response?.data?.message || "Operation unsuccessful";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -102,6 +103,14 @@ const StudentForm = ({
           defaultValue={data?.parentName}
           register={register}
           error={errors.parentName}
+          className="w-full md:w-1/4"
+        />
+        <InputField
+          label="Parent Email"
+          name="parentEmail"
+          defaultValue={data?.parent?.email || ""}
+          register={register}
+          error={errors.parentEmail}
           className="w-full md:w-1/4"
         />
         <InputField

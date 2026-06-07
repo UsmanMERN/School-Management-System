@@ -16,6 +16,7 @@ export const GET = withAuthRoute(async (req: Request, user) => {
 
     const student = await prisma.student.findUnique({
       where: { id: id !== "self" ? id : user.id, schoolId: user.schoolId },
+      include: { parent: true },
     });
 
     if (!student) {

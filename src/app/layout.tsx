@@ -36,8 +36,11 @@ const APP_DEFAULT_TITLE = "EduStream: School Management System"
 const APP_TITLE_TEMPLATE = "%s - EduStream"
 const APP_DESCRIPTION = "Revolutionize your school management with our comprehensive app designed to connect admins, teachers, parents, and students. This platform offers seamless management of school data, including staff, parents, and students, with full editing capabilities for administrators. Teachers can easily take attendance and access real-time analytics on attendance rates, while students and teachers receive personalized schedule calendars based on the school timetable. Parents can conveniently view the schedules of all their children, ensuring they stay informed. Plus, share important announcements and events school-wide to keep everyone in the loop. Enhance communication, boost efficiency, and elevate your school community with our powerful management tool";
 
-export const metadata: Metadata = {
+export const viewport = {
   themeColor: "#000",
+};
+
+export const metadata: Metadata = {
   applicationName: APP_NAME,
   icons: ICONS,
   title: {

@@ -60,7 +60,6 @@ const LoginPage = () => {
           router.push(`/${getRoleLabel(result.role)}`);
         }
       } catch (err: any) {
-        console.log(err);
         toast.dismiss();
         if (err.response?.data?.error === "PNS" || err.message === "PNS") {
           setValue("password", "");
@@ -86,7 +85,6 @@ const LoginPage = () => {
           setPNSNote("");
         } else toast.error("Error sending confirmation email");
       } catch (err: any) {
-        console.log(err.response);
         toast.dismiss();
         setPNSNote("");
         setError(
